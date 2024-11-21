@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiology Report Assessment Survey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+        }
+
+        .report-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            white-space: pre-line;
+        }
+
+        .evaluation-section {
+            margin: 20px 0;
+            padding: 20px;
+            border-left: 4px solid #007bff;
+            background-color: #f8f9fa;
+        }
+
+        .evaluation-group {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .evaluation-table {
+            margin: 20px 0;
+        }
+
+        .evaluation-row {
+            margin: 20px 0;
+        }
+
+        .rating-group {
+            margin: 15px 0;
+            margin-left: 20px;
+        }
+
+        .rating-scale {
+            display: flex;
+            gap: 20px;
+            margin: 10px 0;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .time-option {
+            margin: 10px 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        select, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .report-title {
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #007bff;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .rating-scale label {
+            font-weight: normal;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #495057;
+            margin: 25px 0 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress" id="progressBar" style="width: 0%"></div>
+    </div>
+
+    <form id="surveyForm">
+        <!-- Demographics Section -->
+        <div id="demographicsSection" class="form-section">
+            <h2>Demographics</h2>
+            
+            <div class="form-control">
+                <label for="role">Role:</label>
+                <select id="role" required>
+                    <option value="">Select your role</option>
+                    <option value="attending">Attending Physician</option>
+                    <option value="resident">Resident</option>
+                    <option value="np">Nurse Practitioner</option>
+                    <option value="pa">Physician Assistant</option>
+                </select>
+            </div>
+
+            <div class="form-control">
+                <label for="specialty">Specialty:</label>
+                <input type="text" id="specialty" required>
+            </div>
+
+            <div class="form-control">
+                <label for="experience">Years of Experience:</label>
+                <select id="experience" required>
+                    <option value="">Select years of experience</option>
+                    <option value="0-2">0-2 years</option>
+                    <option value="3-5">3-5 years</option>
+                    <option value="6-10">6-10 years</option>
+                    <option value="10+">More than 10 years</option>
+                </select>
+            </div>
+
+            <button type="button" onclick="showReportSection()">Next</button>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reportsSection" class="form-section hidden">
+            <h2>Report Assessment</h2>
+
+            <!-- Narrative Report -->
+            <div class="report-container">
+                <div class="report-title">Narrative Report</div>
+                <div class="report-content">
+                    FINDINGS: Lung bases demonstrate mild dependent change. The heart size is normal. Liver, gallbladder, spleen, pancreas, adrenal glands, aorta, IVC and right kidney are normal. There is moderate left-sided hydronephrosis with associated delayed nephrogram, hydroureter, and with a 0.1 cm stone in the distal left ureter at the UVJ as seen on image 108 series 4. There is mild periureteral stranding on the left side. There is left-sided nephrolithiasis and with a 0.3 cm stone lower pole of the left kidney. There is a simple cyst interpolar region left kidney increased in size compared with prior and measuring 1.8 cm. GI tract nonobstructed. Terminal ileum, cecum and appendix are normal. Bowel loops are not obstructed. Transverse and descending colonic wall thickening likely due to nondistention. Decompressed urinary bladder. There is a right-sided adnexal cyst measuring 2.5 cm. Left adnexal region is normal. There is no gross free fluid. Osseous structures normal for age.
+                </div>
+            </div>
+
+            <!-- Structured Report -->
+            <div class="report-container">
+                <div class="report-title">Structured Report</div>
+                <div class="report-content">
+                    FINDINGS:
+
+                    LOWER CHEST:  Bibasilar atelectasis. Lung bases are otherwise clear.
+
+                    ABDOMEN / PELVIS:
+
+                    LIVER/BILIARY: No significant abnormality.  
+                    GALLBLADDER: No significant abnormality.
+
+                    PANCREAS: No significant abnormality.
+                    SPLEEN: No significant abnormality.
+                    ADRENAL GLANDS: No significant abnormality.
+                    KIDNEYS: Delayed left-sided nephrogram with moderate hydroureteronephrosis and mild periureteral stranding due to 10 mm obstructing stone at the UVJ as seen on image 108 series 4. Additional nonobstructing nephrolithiasis in the inferior pole the left kidney. Increasing simple left renal cyst in the interpolar region measuring 1.8 cm.
+
+                    AORTOILIAC SYSTEM/VESSELS: Normal in caliber.    
+
+                    UPPER GI: No small bowel obstruction.  
+                    COLON/APPENDIX: No significant abnormality appreciated.    
+                    PERITONEUM/MESENTERY: No free air or free fluid.    
+                    LYMPH NODES: No significant adenopathy. 
+
+                    BLADDER: Unremarkable.
+                    REPRODUCTIVE: No significant abnormality of the reproductive organs.    
+
+                    BONES / BODY WALL: No acute abnormality.  
+                </div>
+            </div>
+
+            <!-- Mixed Report -->
+            <div class="report-container">
+                <div class="report-title">Mixed Report</div>
+                <div class="report-content">
+                    FINDINGS:
+
+                    Bibasilar atelectasis. Lung bases are otherwise clear. 
+
+                    The liver, gallbladder, spleen, pancreas, and adrenal glands are normal.  Delayed left-sided nephrogram with moderate hydroureteronephrosis and mild periureteral stranding due to 10 mm obstructing stone at the UVJ as seen on image 108 series 4. Additional nonobstructing nephrolithiasis in the inferior pole the left kidney. Increasing simple left renal cyst in the interpolar region measuring 1.8 cm.
+                      
+                    The aortoiliac system is normal in course and caliber. 
+
+                    No small bowel obstruction.  No bowel or mesenteric abnormality appreciated. 
+                    No free air, free fluid, or lymphadenopathy in the abdomen or pelvis. 
+
+                    Urinary bladder appears normal. No significant abnormality of the reproductive organs. 
+
+                    Musculoskeletal/body wall: No acute bony abnormality.
+                </div>
+            </div>
+
+            <button type="button" onclick="showEvaluation()">Proceed to Evaluation</button>
+        </div>
+
+        <!-- Evaluation Section -->
+        <div id="evaluationSection" class="form-section hidden">
+        </div>
+    </form>
+
+
+  <script>
+        function showReportSection() {
+            if (!validateDemographics()) {
+                alert("Please complete all demographic information");
+                return;
+            }
+            document.getElementById('demographicsSection').classList.add('hidden');
+            document.getElementById('reportsSection').classList.remove('hidden');
+            document.getElementById('progressBar').style.width = '33%';
+        }
+
+        function validateDemographics() {
+            return document.getElementById('role').value && 
+                   document.getElementById('specialty').value && 
+                   document.getElementById('experience').value;
+        }
+
+        function showEvaluation() {
+            document.getElementById('reportsSection').classList.add('hidden');
+            document.getElementById('evaluationSection').classList.remove('hidden');
+            document.getElementById('progressBar').style.width = '66%';
+            loadEvaluation();
+        }
+
+        function loadEvaluation() {
+            const evaluationSection = document.getElementById('evaluationSection');
+            evaluationSection.innerHTML = `
+                <h2>Report Evaluation</h2>
+
+                <!-- Part 1: Report Format Evaluation -->
+                <div class="evaluation-group">
+                    <h3>Clarity and Organization</h3>
+                    
+                    ${createEvaluationTable([
+                        "Overall clarity of the report",
+                        "Ease of identifying key findings",
+                        "Organization of information"
+                    ])}
+
+                    <h3>Clinical Utility</h3>
+                    <div class="form-control">
+                        <p>How quickly were you able to locate specific organ information?</p>
+                        ${createTimeOptions("time-to-locate", ["Narrative", "Structured", "Mixed"])}
+                    </div>
+
+                    ${createEvaluationTable([
+                        "Confidence in understanding all findings",
+                        "Effectiveness of critical finding communication"
+                    ])}
+                </div>
+
+                <!-- Part 2: Comparative Assessment -->
+                <div class="evaluation-group">
+                    <h3>Format Effectiveness</h3>
+                    ${createFormatPreference("Emergency situations")}
+                    ${createFormatPreference("Routine cases")}
+                    ${createFormatPreference("Teaching purposes")}
+
+                    <h3>Information Location</h3>
+                    ${createFormatPreference("Specific measurements")}
+                    ${createFormatPreference("Incidental findings")}
+                    ${createFormatPreference("Normal findings")}
+
+                    <h3>Efficiency Rating</h3>
+                    ${createEfficiencyTable()}
+                </div>
+
+                <!-- Part 3: Overall Preference -->
+                <div class="evaluation-group">
+                    <h3>Final Assessment</h3>
+                    <div class="form-control">
+                        <label>Which format do you prefer overall?</label>
+                        <div class="rating-scale">
+                            <label><input type="radio" name="overall-preference" value="narrative" required> Narrative</label>
+                            <label><input type="radio" name="overall-preference" value="structured"> Structured</label>
+                            <label><input type="radio" name="overall-preference" value="mixed"> Mixed</label>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <label>Why did you choose this format? (Select all that apply)</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="preference-reason" value="easier"> Easier to read</label>
+                            <label><input type="checkbox" name="preference-reason" value="organized"> Better organized</label>
+                            <label><input type="checkbox" name="preference-reason" value="faster"> Faster to review</label>
+                            <label><input type="checkbox" name="preference-reason" value="comprehensive"> More comprehensive</label>
+                            <label><input type="checkbox" name="preference-reason" value="clinical"> Better for clinical decision-making</label>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <label for="suggestions">What improvements would you suggest for your preferred format?</label>
+                        <textarea id="suggestions" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <!-- Part 4: Impact on Clinical Practice -->
+                <div class="evaluation-group">
+                    <h3>Clinical Impact Assessment</h3>
+                    ${createImpactAssessment("Clinical decision-making time")}
+                    ${createImpactAssessment("Confidence in findings")}
+                    ${createImpactAssessment("Communication with colleagues")}
+
+                    <div class="form-control">
+                        <label>Would you support implementing structured reporting in your practice?</label>
+                        <div class="rating-scale">
+                            <label><input type="radio" name="support-implementation" value="yes" required> Yes</label>
+                            <label><input type="radio" name="support-implementation" value="no"> No</label>
+                            <label><input type="radio" name="support-implementation" value="undecided"> Undecided</label>
+                        </div>
+                    </div>
+
+                    <div class="form-control">
+                        <label for="additional-comments">Additional comments or suggestions:</label>
+                        <textarea id="additional-comments" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <button type="button" onclick="submitSurvey()">Submit Survey</button>
+            `;
+        }
+
+        function createEvaluationTable(questions) {
+            return `
+                <div class="evaluation-table">
+                    ${questions.map(question => `
+                        <div class="evaluation-row">
+                            <p>${question}</p>
+                            <div class="rating-group">
+                                <p>Narrative:</p>
+                                ${createRatingScale(`narrative-${question.toLowerCase().replace(/\s+/g, '-')}`)}
+                                <p>Structured:</p>
+                                ${createRatingScale(`structured-${question.toLowerCase().replace(/\s+/g, '-')}`)}
+                                <p>Mixed:</p>
+                                ${createRatingScale(`mixed-${question.toLowerCase().replace(/\s+/g, '-')}`)}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function createRatingScale(name) {
+            return `
+                <div class="rating-scale">
+                    ${[1,2,3,4,5].map(num => `
+                        <label>
+                            <input type="radio" name="${name}" value="${num}" required>
+                            ${num}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function createTimeOptions(name, formats) {
+            return formats.map(format => `
+                <div class="time-option">
+                    <p>${format}:</p>
+                    <select name="${name}-${format.toLowerCase()}" required>
+                        <option value="">Select time</option>
+                        <option value="<30">&lt;30 seconds</option>
+                        <option value="30-60">30-60 seconds</option>
+                        <option value="60-120">1-2 minutes</option>
+                        <option value=">120">&gt;2 minutes</option>
+                    </select>
+                </div>
+            `).join('');
+        }
+
+        function createFormatPreference(category) {
+            return `
+                <div class="form-control">
+                    <label>Best format for ${category}:</label>
+                    <div class="rating-scale">
+                        <label><input type="radio" name="preference-${category.toLowerCase().replace(/\s+/g, '-')}" value="narrative" required> Narrative</label>
+                        <label><input type="radio" name="preference-${category.toLowerCase().replace(/\s+/g, '-')}" value="structured"> Structured</label>
+                        <label><input type="radio" name="preference-${category.toLowerCase().replace(/\s+/g, '-')}" value="mixed"> Mixed</label>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createEfficiencyTable() {
+            const categories = ["Kidney findings", "Vascular findings", "GI findings"];
+            return `
+                <div class="efficiency-table">
+                    ${categories.map(category => `
+                        <div class="efficiency-row">
+                            <p>${category}</p>
+                            <div class="rating-group">
+                                <p>Narrative:</p>
+                                ${createRatingScale(`efficiency-narrative-${category.toLowerCase().replace(/\s+/g, '-')}`)}
+                                <p>Structured:</p>
+                                ${createRatingScale(`efficiency-structured-${category.toLowerCase().replace(/\s+/g, '-')}`)}
+                                <p>Mixed:</p>
+                                ${createRatingScale(`efficiency-mixed-${category.toLowerCase().replace(/\s+/g, '-')}`)}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function createImpactAssessment(category) {
+            return `
+                <div class="form-control">
+                    <label>Impact on ${category}:</label>
+                    <div class="rating-scale">
+                        <label><input type="radio" name="impact-${category.toLowerCase().replace(/\s+/g, '-')}" value="decrease" required> Decrease</label>
+                        <label><input type="radio" name="impact-${category.toLowerCase().replace(/\s+/g, '-')}" value="no-change"> No change</label>
+                        <label><input type="radio" name="impact-${category.toLowerCase().replace(/\s+/g, '-')}" value="increase"> Increase</label>
+                    </div>
+                </div>
+            `;
+        }
+
+        function submitSurvey() {
+            // Here you would typically collect all the form data and send it to a server
+            alert('Thank you for completing the survey!');
+            document.getElementById('progressBar').style.width = '100%';
+            // Add your data submission logic here
+        }
+    </script>
+</body>
+</html>
