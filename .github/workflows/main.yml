@@ -3,18 +3,124 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-    - name: Install Node.js
+    - name: Setup Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '20'
+        node-version: '16'
+
+    - name: Verify package.json exists
+      run: |
+        if [ ! -f "package.json" ]; then
+          echo "Creating package.json"
+          echo '{
+            "name": "radiology-game",
+            "version": "0.1.0",
+            "homepage": "https://${{ github.repository_owner }}.github.io/QI",
+            "private": false,
+            "dependencies": {
+              "@testing-library/jest-dom": "^5.17.0",
+              "@testing-library/react": "^13.4.0",
+              "@testing-library/user-event": "^13.5.0",
+              "react": "^18.2.0",
+              "react-dom": "^18.2.0",
+              "react-scripts": "5.0.1",
+              "web-vitals": "^2.1.4"
+            },
+            "scripts": {
+              "predeploy": "npm run build",
+              "deploy": "gh-pages -d build",
+              "start": "react-scripts start",
+              "build": "react-scripts build",
+              "test": "react-scripts test",
+              "eject": "react-scripts eject"
+            },
+            "eslintConfig": {
+              "extends": [
+                "react-app",
+                "react-app/jest"
+              ]
+            },
+            "browserslist": {
+              "production": [
+                ">0.2%",
+                "not dead",
+                "not op_mini all"
+              ],
+              "development": [
+                "last 1 chrome version",
+                "last 1 firefox version",
+                "last 1 safari version"
+              ]
+            },
+            "devDependencies": {
+              "gh-pages": "^6.1.0"
+            }
+          }' > package.json
+        fi
+
+    - name: Create src directory and files
+      run: |
+        mkdir -p src/components public
+        
+        # Create index.js
+        echo 'import React from "react";
+        import ReactDOM from "react-dom/client";
+        import "./index.css";
+        import App from "./App";
+        
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        );' > src/index.js
+        
+        # Create App.js
+        echo 'import React from "react";
+        import RadiologyGame from "./components/RadiologyGame";
+        
+        function App() {
+          return (
+            <div className="App">
+              <RadiologyGame />
+            </div>
+          );
+        }
+        
+        export default App;' > src/App.js
+        
+        # Create RadiologyGame.js
+        echo 'import React, { useState, useEffect } from "react";
+        // Rest of your RadiologyGame component code
+        ' > src/components/RadiologyGame.js
+        
+        # Create index.html
+        echo '<!DOCTYPE html>
+        <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="theme-color" content="#000000" />
+            <meta
+              name="description"
+              content="Radiology Finding Game"
+            />
+            <title>Radiology Finding Game</title>
+          </head>
+          <body>
+            <div id="root"></div>
+          </body>
+        </html>' > public/index.html
 
     - name: Install Dependencies
       run: npm install
