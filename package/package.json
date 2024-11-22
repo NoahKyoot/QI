@@ -1,7 +1,7 @@
 {
   "name": "radiology-game",
   "version": "0.1.0",
-  "homepage": "https://[your-github-username].github.io/radiology-game",
+  "homepage": "https://NoahKyoot.github.io/radiology-game",
   "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
